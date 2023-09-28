@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id ("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -36,7 +37,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "18"
     }
     buildFeatures {
         compose = true
@@ -50,7 +51,10 @@ android {
         }
     }
 }
-
+kapt {
+    correctErrorTypes = true
+    useBuildCache = false
+}
 dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
@@ -76,13 +80,24 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
     // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-ktx:$room_version")
     // To use Kotlin Symbol Processing (KSP)
 //    ksp("androidx.room:room-compiler:$room_version")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+
+
 
 
     //Dagger hilt
     //Dagger
     implementation ("com.google.dagger:hilt-android:2.44")
     kapt ("com.google.dagger:hilt-compiler:2.44")
+
+
+    //TEST
+
+
+//    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version")
+
 }

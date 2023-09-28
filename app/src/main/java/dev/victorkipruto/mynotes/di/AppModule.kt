@@ -11,6 +11,7 @@ import dev.victorkipruto.mynotes.feature_note.data.repository.NoteRepositoryImpl
 import dev.victorkipruto.mynotes.feature_note.domain.repository.NoteRepository
 import dev.victorkipruto.mynotes.feature_note.domain.use_case.AddNote
 import dev.victorkipruto.mynotes.feature_note.domain.use_case.DeleteNote
+import dev.victorkipruto.mynotes.feature_note.domain.use_case.GetNote
 import dev.victorkipruto.mynotes.feature_note.domain.use_case.GetNotes
 import dev.victorkipruto.mynotes.feature_note.domain.use_case.NotesUseCases
 import javax.inject.Singleton
@@ -44,7 +45,8 @@ object AppModule {
         return NotesUseCases(
             getNotes = GetNotes(repository),
             deleteNote = DeleteNote(repository),
-            addNote = AddNote(repository)
+            addNote = AddNote(repository),
+            getNote = GetNote(repository)
         )
     }
 }

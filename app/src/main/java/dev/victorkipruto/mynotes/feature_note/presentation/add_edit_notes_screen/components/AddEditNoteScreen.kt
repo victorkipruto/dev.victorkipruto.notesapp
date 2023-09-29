@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColor
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import dev.victorkipruto.mynotes.core.util.TestTags
 import dev.victorkipruto.mynotes.feature_note.domain.model.Note
 import dev.victorkipruto.mynotes.feature_note.presentation.add_edit_notes_screen.AddEditNoteEvent
 import dev.victorkipruto.mynotes.feature_note.presentation.add_edit_notes_screen.AddEditNoteViewModel
@@ -159,7 +160,8 @@ fun AddEditNoteScreen (
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.headlineLarge
+                textStyle = MaterialTheme.typography.headlineLarge,
+                testTag = TestTags.TITLE_TEXT_FIELD
             )
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -175,7 +177,8 @@ fun AddEditNoteScreen (
                 isHintVisible = contentState.isHintVisible,
                 singleLine = false,
                 textStyle = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier.fillMaxHeight(),
+                testTag = TestTags.CONTENT_TEXT_FIELD
             )
         }
     }

@@ -10,6 +10,6 @@ abstract class NoteDatabase:RoomDatabase() {
     abstract val noteDao:NoteDao
 
     companion object{
-        val DATABASE_NAME="notes_db"
+        const val DATABASE_NAME="notes_db"
     }
 }

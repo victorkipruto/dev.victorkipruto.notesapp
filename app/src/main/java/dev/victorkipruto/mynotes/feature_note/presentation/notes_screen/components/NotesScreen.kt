@@ -37,12 +37,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.victorkipruto.mynotes.core.util.TestTags
 import dev.victorkipruto.mynotes.feature_note.domain.model.Note
 import dev.victorkipruto.mynotes.feature_note.presentation.notes_screen.NotesEvents
 import dev.victorkipruto.mynotes.feature_note.presentation.notes_screen.NotesViewModel
@@ -119,7 +121,10 @@ fun NotesScreen(
             )
             {
                 OrderSection(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag(TestTags.ORDER_SECTION)
+                    ,
                     noteOrder = state.noteOrder,
                     onOrderChange ={
                         viewModel.onEvent(NotesEvents.Order(it))

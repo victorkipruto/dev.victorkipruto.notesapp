@@ -45,8 +45,7 @@ class NotesViewModel @Inject constructor(val useCases: NotesUseCases):ViewModel(
                 {
                     return
                 }
-
-
+                getNotes(events.noteOrder)
             }
 
             is NotesEvents.RestoreNote -> {

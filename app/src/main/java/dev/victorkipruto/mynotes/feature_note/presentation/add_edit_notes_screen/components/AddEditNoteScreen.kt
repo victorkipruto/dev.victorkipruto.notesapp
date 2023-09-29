@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -102,42 +104,46 @@ fun AddEditNoteScreen (
             modifier= Modifier
                 .fillMaxSize()
                 .padding(padding)
+                .background(noteBackgroundAnimatable.value)
 
         )
         {
-            Row (
+            LazyRow(
                 modifier= Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             )
             {
-                Note.noteColors.forEach { color ->
-                    val colorInt = color.toArgb()
-                    Box(
-                      modifier= Modifier
-                          .size(48.dp)
-                          .shadow(12.dp, CircleShape)
-                          .clip(CircleShape)
-                          .background(color)
-                          .border(
-                              width = 2.dp,
-                              color = when (viewModel.noteColor.value == colorInt) {
-                                  true -> Color.Black
-                                  false -> Color.Transparent
-                              },
-                              shape = CircleShape
-                          )
-                          .clickable {
-                              scope.launch {
-                                  noteBackgroundAnimatable.animateTo(
-                                      targetValue = Color(colorInt),
-                                      animationSpec = tween(durationMillis = 400)
-                                  )
-                              }
-                              viewModel.onEvent(AddEditNoteEvent.ChangeColor(colorInt))
-                          }
-                    )
+                item {
+                    Note.noteColors.forEach { color ->
+                        val colorInt = color.toArgb()
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .shadow(12.dp, CircleShape)
+                                .clip(CircleShape)
+                                .background(color)
+                                .border(
+                                    width = 2.dp,
+                                    color = when (viewModel.noteColor.value == colorInt) {
+                                        true -> Color.Black
+                                        false -> Color.Transparent
+                                    },
+                                    shape = CircleShape
+                                )
+                                .clickable {
+                                    scope.launch {
+                                        noteBackgroundAnimatable.animateTo(
+                                            targetValue = Color(colorInt),
+                                            animationSpec = tween(durationMillis = 400)
+                                        )
+                                    }
+                                    viewModel.onEvent(AddEditNoteEvent.ChangeColor(colorInt))
+                                }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
                 }
             }
 

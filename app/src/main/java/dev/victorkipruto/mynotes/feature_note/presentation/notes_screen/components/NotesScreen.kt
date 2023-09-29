@@ -111,58 +111,58 @@ fun NotesScreen(
                         contentDescription = "Sort"
                     )
                 }
-
-                AnimatedVisibility(
-                    visible = state.isOrderSectionVisible,
-                    enter = fadeIn() + slideInVertically(),
-                    exit = fadeOut() + slideOutVertically()
+            }
+            AnimatedVisibility(
+                visible = state.isOrderSectionVisible,
+                enter = fadeIn() + slideInVertically(),
+                exit = fadeOut() + slideOutVertically()
+            )
+            {
+                OrderSection(
+                    modifier = Modifier.fillMaxWidth(),
+                    noteOrder = state.noteOrder,
+                    onOrderChange ={
+                        viewModel.onEvent(NotesEvents.Order(it))
+                    }
                 )
-                {
-                    OrderSection(
-                        modifier = Modifier.fillMaxWidth(),
-                        noteOrder = state.noteOrder,
-                        onOrderChange ={
-                            viewModel.onEvent(NotesEvents.Order(it))
-                        }
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(16.dp))
-                
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                )
-                {
-                    items(state.notes)
-                    {note->
-                        NoteItem(
-                            note = note,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    navController.navigate(
-                                        Screen.AddEditNotesScreen.route +
-                                                "?noteId=${note.id}&noteColor=${note.color}"
-                                    )
-                                },
-                            onDeleteClick = {
-                                viewModel.onEvent(NotesEvents.DeleteNote(note))
-                                scope.launch {
-                                    val results = scaffoldState.showSnackbar(
-                                        message = "Note deleted",
-                                        actionLabel = "Undo"
-                                        )
-                                    if(results == SnackbarResult.ActionPerformed)
-                                    {
-                                        viewModel.onEvent(NotesEvents.RestoreNote)
-                                    }
+            }
+            Spacer(modifier = Modifier.height(4.dp))
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(2.dp)
+            )
+            {
+                items(state.notes)
+                {note->
+                    NoteItem(
+                        note = note,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                navController.navigate(
+                                    Screen.AddEditNotesScreen.route +
+                                            "?noteId=${note.id}&noteColor=${note.color}"
+                                )
+                            },
+                        onDeleteClick = {
+                            viewModel.onEvent(NotesEvents.DeleteNote(note))
+                            scope.launch {
+                                val results = scaffoldState.showSnackbar(
+                                    message = "Note deleted",
+                                    actionLabel = "Undo"
+                                )
+                                if(results == SnackbarResult.ActionPerformed)
+                                {
+                                    viewModel.onEvent(NotesEvents.RestoreNote)
                                 }
                             }
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
                 }
             }
+
         }
     }
 

@@ -46,6 +46,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.victorkipruto.mynotes.feature_note.domain.model.Note
 import dev.victorkipruto.mynotes.feature_note.presentation.notes_screen.NotesEvents
 import dev.victorkipruto.mynotes.feature_note.presentation.notes_screen.NotesViewModel
+import dev.victorkipruto.mynotes.feature_note.presentation.util.Screen
 import dev.victorkipruto.mynotes.ui.theme.Purple40
 import kotlinx.coroutines.launch
 
@@ -67,7 +68,9 @@ fun NotesScreen(
         snackbarHost = {SnackbarHost(hostState = scaffoldState)},
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {  },
+                onClick = {
+                    navController.navigate(Screen.AddEditNotesScreen.route)
+                },
                 containerColor = MaterialTheme.colorScheme.primary
             )
             {
@@ -136,7 +139,12 @@ fun NotesScreen(
                             note = note,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { },
+                                .clickable {
+                                    navController.navigate(
+                                        Screen.AddEditNotesScreen.route +
+                                                "?noteId=${note.id}&noteColor=${note.color}"
+                                    )
+                                },
                             onDeleteClick = {
                                 viewModel.onEvent(NotesEvents.DeleteNote(note))
                                 scope.launch {
